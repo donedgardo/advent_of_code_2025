@@ -4,6 +4,8 @@ use std::io;
 use std::io::BufRead;
 
 pub mod day01;
+mod day02;
+
 pub fn get_input(file_name: &str) -> Vec<String> {
     let path_name = format!("./src/input/{}", file_name);
     let path = Path::new((&path_name).into());
