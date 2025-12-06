@@ -18,7 +18,7 @@ pub fn get_password2(input: Vec<String>, start: u32) -> u32 {
     for n in input {
         let direction = get_direction(&n);
         let qty = get_qty(&n);
-        let mut range;
+        let range;
         if direction == -1 {
             range = pos + (direction as i32 * qty as i32)..pos;
         } else {

@@ -1,11 +1,11 @@
 use std::ops::{RangeInclusive};
-use rayon::prelude::{IntoParallelRefIterator, ParallelIterator};
+use rayon::prelude::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator};
 
 pub fn part_1(input: &String) -> u64 {
     input.split(',')
         .collect::<Vec<_>>()
         .par_iter()
-        .flat_map(|x| get_invalid_ids(x))
+        .map(|x| get_invalid_ids(x))
         .sum()
 }
 
@@ -13,40 +13,39 @@ pub fn part_2(input: &String) -> u64 {
     input.split(',')
         .collect::<Vec<_>>()
         .par_iter()
-        .flat_map(|x| get_invalid_ids_2(x))
+        .map(|x| get_invalid_ids_2(x))
         .sum()
 }
 
-fn get_invalid_ids(input: &str) -> Vec<u64> {
-    let mut ids = vec![];
+fn get_invalid_ids(input: &str) -> u64 {
     let range = get_range(input);
-    for num in range {
+    range.into_par_iter().map(|num| {
+        let mut total = 0;
         let num_as_str = num.to_string();
         let length = num_as_str.len();
-        if length.rem_euclid(2) != 0 { continue }
+        if length.rem_euclid(2) != 0 { return total; }
         let half =  length / 2;
         let (first_half, second_half) = num_as_str.split_at(half);
-        if first_half == second_half { ids.push(num) }
-    }
-    ids
+        if first_half == second_half { total += num }
+        total
+    }).sum::<u64>()
 }
-pub fn get_invalid_ids_2(input: &str) -> Vec<u64> {
-    let mut ids = vec![];
+pub fn get_invalid_ids_2(input: &str) -> u64 {
     let range = get_range(input);
-    for num in range {
+    range.into_par_iter().map(|num| {
+        let mut total = 0;
         let num_digits = count_digits(num);
         for chunk_size in 1..=(num_digits/2) {
             if(num_digits % chunk_size) != 0 {
                 continue;
             }
             if has_repeating_pattern(num, num_digits, chunk_size) {
-                ids.push(num);
+                total += num;
                 break;
             }
         }
-
-    }
-    ids
+        total
+    }).sum::<u64>()
 }
 
 fn count_digits(mut n: u64) -> usize {
@@ -98,11 +97,11 @@ mod day02_test {
     }
 
     #[rstest]
-    #[case("11-22", vec![11, 22])]
-    #[case("95-115", vec![99])]
-    #[case("1188511880-1188511890", vec![1188511885])]
-    #[case("222220-222224", vec![222222])]
-    fn finds_invalid_id(#[case] input: &str, #[case] expected: Vec<u64>) {
+    #[case("11-22", 11 + 22)]
+    #[case("95-115", 99)]
+    #[case("1188511880-1188511890", 1188511885)]
+    #[case("222220-222224", 222222)]
+    fn finds_invalid_id(#[case] input: &str, #[case] expected: u64) {
         let invalid_ids = get_invalid_ids(input);
         assert_eq!(invalid_ids, expected);
     }
@@ -123,12 +122,12 @@ mod day02_test {
     }
 
     #[rstest]
-    #[case("11-22", vec![11, 22])]
-    #[case("95-115", vec![99, 111])]
-    #[case("1188511880-1188511890", vec![1188511885])]
-    #[case("222220-222224", vec![222222])]
-    #[case("824824821-824824827", vec![824824824])]
-    fn finds_invalid_id_2(#[case] input: &str, #[case] expected: Vec<u64>) {
+    #[case("11-22", 11 + 22)]
+    #[case("95-115", 99 + 111)]
+    #[case("1188511880-1188511890", 1188511885)]
+    #[case("222220-222224", 222222)]
+    #[case("824824821-824824827", 824824824)]
+    fn finds_invalid_id_2(#[case] input: &str, #[case] expected: u64) {
         let invalid_ids = get_invalid_ids_2(input);
         assert_eq!(invalid_ids, expected);
     }
