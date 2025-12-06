@@ -31,22 +31,47 @@ pub fn get_invalid_ids_2(input: &str) -> Vec<u64> {
     let mut ids = vec![];
     let range = get_range(input);
     for num in range {
-        let num_as_str = num.to_string();
-        let length = num_as_str.len();
-        for n in 1..length {
-            if (length-n).rem_euclid(n) != 0 { continue }
-            let chunks: Vec<String> = num_as_str
-                .as_bytes()
-                .chunks(n)
-                .map(|chunk| String::from_utf8(chunk.to_vec()).unwrap())
-                .collect();
-            if chunks.iter().all(|item| item == chunks.first().unwrap()) {
+        let num_digits = count_digits(num);
+        for chunk_size in 1..=(num_digits/2) {
+            if(num_digits % chunk_size) != 0 {
+                continue;
+            }
+            if has_repeating_pattern(num, num_digits, chunk_size) {
                 ids.push(num);
                 break;
             }
         }
+
     }
     ids
+}
+
+fn count_digits(mut n: u64) -> usize {
+    if n == 0 {
+        return 1;
+    }
+    let mut count = 0;
+    while n > 0 {
+        n/=10;
+        count += 1;
+    }
+    count
+}
+
+fn has_repeating_pattern(num: u64, num_digits: usize, chunk_size: usize) -> bool {
+    let divisor = 10_u64.pow(chunk_size as u32);
+    let first_chunk = (num /10_u64.pow((num_digits - chunk_size) as u32)) % divisor;
+
+    let num_chunks = num_digits /chunk_size;
+    for i in 0..num_chunks {
+        let shift = (num_digits - (i+1) * chunk_size) as u32;
+        let chunk = (num/10_u64.pow(shift)) % divisor;
+        if chunk != first_chunk {
+            return false;
+        }
+    }
+    true
+
 }
 
 fn get_range(input: &str) -> RangeInclusive<u64> {
