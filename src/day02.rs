@@ -1,16 +1,19 @@
 use std::ops::{RangeInclusive};
+use rayon::prelude::{IntoParallelRefIterator, ParallelIterator};
 
 pub fn part_1(input: &String) -> u64 {
     input.split(',')
-        .map(|x| get_invalid_ids(x))
-        .flatten()
+        .collect::<Vec<_>>()
+        .par_iter()
+        .flat_map(|x| get_invalid_ids(x))
         .sum()
 }
 
 pub fn part_2(input: &String) -> u64 {
     input.split(',')
-        .map(|x| get_invalid_ids_2(x))
-        .flatten()
+        .collect::<Vec<_>>()
+        .par_iter()
+        .flat_map(|x| get_invalid_ids_2(x))
         .sum()
 }
 
