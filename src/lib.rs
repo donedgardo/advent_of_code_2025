@@ -1,3 +1,5 @@
+#![feature(iter_map_windows)]
+
 use std::path::Path;
 use std::fs::File;
 use std::io;
@@ -5,6 +7,7 @@ use std::io::BufRead;
 
 pub mod day01;
 pub mod day02;
+pub mod day03;
 
 pub fn get_input(file_name: &str) -> Vec<String> {
     let path_name = format!("./src/input/{}", file_name);
