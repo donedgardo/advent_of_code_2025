@@ -19,3 +19,8 @@ fn day2_part2() {
 fn day3_part1() {
     day03::part_1(divan::black_box(get_input("day03.txt")));
 }
+
+#[divan::bench]
+fn day3_part2() {
+    day03::part_2(divan::black_box(get_input("day03.txt")));
+}

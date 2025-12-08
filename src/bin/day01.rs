@@ -15,4 +15,3 @@ fn get_day_1_answer2(file_name: &str) -> u32 {
     let input = get_input(file_name);
     day01::get_password2(input, 50)
 }
-

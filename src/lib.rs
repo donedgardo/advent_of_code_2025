@@ -1,9 +1,9 @@
 #![feature(iter_map_windows)]
 
-use std::path::Path;
 use std::fs::File;
 use std::io;
 use std::io::BufRead;
+use std::path::Path;
 
 pub mod day01;
 pub mod day02;

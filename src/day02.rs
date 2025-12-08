@@ -1,8 +1,9 @@
-use std::ops::{RangeInclusive};
 use rayon::prelude::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator};
+use std::ops::RangeInclusive;
 
 pub fn part_1(input: &String) -> u64 {
-    input.split(',')
+    input
+        .split(',')
         .collect::<Vec<_>>()
         .par_iter()
         .map(|x| get_invalid_ids(x))
@@ -10,7 +11,8 @@ pub fn part_1(input: &String) -> u64 {
 }
 
 pub fn part_2(input: &String) -> u64 {
-    input.split(',')
+    input
+        .split(',')
         .collect::<Vec<_>>()
         .par_iter()
         .map(|x| get_invalid_ids_2(x))
@@ -19,33 +21,43 @@ pub fn part_2(input: &String) -> u64 {
 
 fn get_invalid_ids(input: &str) -> u64 {
     let range = get_range(input);
-    range.into_par_iter().map(|num| {
-        let mut total = 0;
-        let num_as_str = num.to_string();
-        let length = num_as_str.len();
-        if length.rem_euclid(2) != 0 { return total; }
-        let half =  length / 2;
-        let (first_half, second_half) = num_as_str.split_at(half);
-        if first_half == second_half { total += num }
-        total
-    }).sum::<u64>()
+    range
+        .into_par_iter()
+        .map(|num| {
+            let mut total = 0;
+            let num_as_str = num.to_string();
+            let length = num_as_str.len();
+            if length.rem_euclid(2) != 0 {
+                return total;
+            }
+            let half = length / 2;
+            let (first_half, second_half) = num_as_str.split_at(half);
+            if first_half == second_half {
+                total += num
+            }
+            total
+        })
+        .sum::<u64>()
 }
 pub fn get_invalid_ids_2(input: &str) -> u64 {
     let range = get_range(input);
-    range.into_par_iter().map(|num| {
-        let mut total = 0;
-        let num_digits = count_digits(num);
-        for chunk_size in 1..=(num_digits/2) {
-            if(num_digits % chunk_size) != 0 {
-                continue;
+    range
+        .into_par_iter()
+        .map(|num| {
+            let mut total = 0;
+            let num_digits = count_digits(num);
+            for chunk_size in 1..=(num_digits / 2) {
+                if (num_digits % chunk_size) != 0 {
+                    continue;
+                }
+                if has_repeating_pattern(num, num_digits, chunk_size) {
+                    total += num;
+                    break;
+                }
             }
-            if has_repeating_pattern(num, num_digits, chunk_size) {
-                total += num;
-                break;
-            }
-        }
-        total
-    }).sum::<u64>()
+            total
+        })
+        .sum::<u64>()
 }
 
 fn count_digits(mut n: u64) -> usize {
@@ -54,7 +66,7 @@ fn count_digits(mut n: u64) -> usize {
     }
     let mut count = 0;
     while n > 0 {
-        n/=10;
+        n /= 10;
         count += 1;
     }
     count
@@ -62,18 +74,17 @@ fn count_digits(mut n: u64) -> usize {
 
 fn has_repeating_pattern(num: u64, num_digits: usize, chunk_size: usize) -> bool {
     let divisor = 10_u64.pow(chunk_size as u32);
-    let first_chunk = (num /10_u64.pow((num_digits - chunk_size) as u32)) % divisor;
+    let first_chunk = (num / 10_u64.pow((num_digits - chunk_size) as u32)) % divisor;
 
-    let num_chunks = num_digits /chunk_size;
+    let num_chunks = num_digits / chunk_size;
     for i in 0..num_chunks {
-        let shift = (num_digits - (i+1) * chunk_size) as u32;
-        let chunk = (num/10_u64.pow(shift)) % divisor;
+        let shift = (num_digits - (i + 1) * chunk_size) as u32;
+        let chunk = (num / 10_u64.pow(shift)) % divisor;
         if chunk != first_chunk {
             return false;
         }
     }
     true
-
 }
 
 fn get_range(input: &str) -> RangeInclusive<u64> {
@@ -84,10 +95,10 @@ fn get_range(input: &str) -> RangeInclusive<u64> {
 
 #[cfg(test)]
 mod day02_test {
-    use rstest::rstest;
-    use std::ops::{RangeInclusive};
-    use crate::day02::{part_1, get_invalid_ids, get_invalid_ids_2, get_range, part_2};
+    use crate::day02::{get_invalid_ids, get_invalid_ids_2, get_range, part_1, part_2};
     use crate::get_sample_input;
+    use rstest::rstest;
+    use std::ops::RangeInclusive;
 
     #[test]
     fn sample_test_1() {
@@ -109,7 +120,7 @@ mod day02_test {
     #[test]
     fn parses_string_range() {
         let input = "11-22";
-        let range: RangeInclusive<u64>  = get_range(input);
+        let range: RangeInclusive<u64> = get_range(input);
         assert_eq!(range.start(), &11);
         assert_eq!(range.end(), &22);
     }
