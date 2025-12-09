@@ -5,7 +5,35 @@ pub fn part_1(input: Vec<String>) -> u32 {
     let mut answer  =  0;
     for y in 0..grid.height() {
         for x in 0..grid.width() {
+            if grid[y][x] == 0 { continue }
+            let papers = get_neighbors(&grid, x, y).map(|n| n as u32).sum::<u32>();
+            if papers < 4 {
+                answer += 1;
+            }
         }
+    }
+    answer
+}
+
+pub fn part_2(input: Vec<String>) -> u64 {
+    let mut grid = Grid::new(input);
+    let mut answer  =  0;
+    let width = grid.width();
+    let height = grid.height();
+    loop {
+        let mut acc = 0;
+        for y in 0..grid.height() {
+            for x in 0..grid.width() {
+                if grid[y][x] == 0 { continue }
+                let papers = get_neighbors(&grid, x, y).map(|n| n as u32).sum::<u32>();
+                if papers < 4 {
+                    acc += 1;
+                    grid.remove((x, y));
+                }
+            }
+        }
+        if acc == 0 { break; }
+        answer += acc
     }
     answer
 }
@@ -31,6 +59,9 @@ impl Grid {
     pub fn width(&self) -> usize {
         self.width
     }
+    pub fn remove(&mut self, (x, y): (usize, usize)) {
+        self.data[y][x] = 0;
+    }
 }
 
 impl Index<usize> for Grid {
@@ -40,7 +71,6 @@ impl Index<usize> for Grid {
        &self.data[index]
     }
 }
-
 
 fn create_row(row: &str) -> Vec<u8> {
     row.chars().map(|c| { if c == '@'{
@@ -54,20 +84,16 @@ fn create_grid(input: Vec<String>) -> Vec<Vec<u8>> {
     input.iter().map(|i| create_row(i)).collect()
 }
 
-fn get_neighbors_coords(grid: &Grid, x: usize, y: usize) -> Vec<(usize, usize)> {
-    get_neighbors_iter(grid, x, y).collect()
-}
-
 fn get_neighbors_iter(grid: &Grid, x: usize, y: usize) -> impl Iterator<Item = (usize, usize)> {
     vec![
-        (-1i8, -1i8), (-1i8, 0i8), (-1i8, 1i8),
-        (0i8, -1i8), (0i8, 1i8),
-        (1i8, -1i8), (1i8, 0i8), (1i8, 1i8),
+        (-1i32, -1i32), (-1i32, 0i32), (-1i32, 1i32),
+        (0i32, -1i32), (0i32, 1i32),
+        (1i32, -1i32), (1i32, 0i32), (1i32, 1i32),
     ].into_iter()
-      .map(move |(ny, nx)| (y as i8 + ny, x as i8 + nx))
+      .map(move |(ny, nx)| (y as i32 + ny, x as i32 + nx))
       .filter(|(y, x)|
-        *y >= 0 && *y < grid.height() as i8 &&
-          *x >= 0 && *x < grid.width() as i8
+        *y >= 0 && *y < grid.height() as i32 &&
+          *x >= 0 && *x < grid.width() as i32
       )
       .map(|(y, x)| (y as usize, x as usize))
 }
@@ -78,20 +104,15 @@ pub fn get_neighbors(grid: &Grid, x: usize, y: usize) -> impl Iterator<Item=u8>{
     })
 }
 
-pub fn part_2(input: Vec<String>) -> u64 {
-    0
-}
-
-
 
 
 #[cfg(test)]
 mod day04_test {
     use rstest::rstest;
-    use crate::day04::{create_row, get_neighbors, get_neighbors_coords, Grid, part_1, part_2};
+    use crate::day04::{create_row, get_neighbors, get_neighbors_iter, Grid, part_1, part_2};
     use crate::get_sample_input;
+
     #[test]
-    #[ignore]
     fn sample_test_1() {
         let input = get_sample_input("day04.txt");
         let answer = part_1(input);
@@ -144,7 +165,7 @@ mod day04_test {
     ) {
         let input = get_sample_input("day04.txt");
         let grid = Grid::new(input);
-        let neighbors = get_neighbors_coords(&grid, pos.1, pos.0);
+        let neighbors: Vec<_> = get_neighbors_iter(&grid, pos.1, pos.0).collect();
         assert_eq!(neighbors, expected_neighbors)
     }
 
@@ -162,11 +183,19 @@ mod day04_test {
     }
 
     #[test]
-    #[ignore]
     fn sample_test_2() {
-        let input = get_sample_input("day03.txt");
+        let input = get_sample_input("day04.txt");
         let answer = part_2(input);
-        assert_eq!(answer, 3121910778619);
+        assert_eq!(answer, 43);
+    }
+
+    #[test]
+    fn removes_from_grid() {
+        let input = get_sample_input("day04.txt");
+        let mut grid = Grid::new(input);
+        assert_eq!(grid[0][3], 1);
+        grid.remove((3, 0));
+        assert_eq!(grid[0][3], 0);
     }
 
 }
