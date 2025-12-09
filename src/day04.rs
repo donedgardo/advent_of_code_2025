@@ -18,8 +18,6 @@ pub fn part_1(input: Vec<String>) -> u32 {
 pub fn part_2(input: Vec<String>) -> u64 {
     let mut grid = Grid::new(input);
     let mut answer  =  0;
-    let width = grid.width();
-    let height = grid.height();
     loop {
         let mut acc = 0;
         for y in 0..grid.height() {
