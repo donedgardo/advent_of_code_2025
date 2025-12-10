@@ -1,4 +1,4 @@
-use advent_of_code_2025::{day02, day03, day04, get_input};
+use advent_of_code_2025::{day02, day03, day04, day05, get_input};
 
 fn main() {
     // Run registered benchmarks.
@@ -33,4 +33,9 @@ fn day4_part1() {
 #[divan::bench]
 fn day4_part2() {
     day04::part_2(divan::black_box(get_input("day04.txt")));
+}
+
+#[divan::bench]
+fn day5_part1() {
+    day05::part_1(divan::black_box(get_input("day05.txt")));
 }
