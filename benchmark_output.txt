@@ -1,0 +1,107 @@
+
+running 61 tests
+test day01::day01_test::sample_test_1 ... ignored
+test day01::day01_test::sample_test_2 ... ignored
+test day02::day02_test::finds_invalid_id::case_1 ... ignored
+test day02::day02_test::finds_invalid_id::case_2 ... ignored
+test day02::day02_test::finds_invalid_id::case_3 ... ignored
+test day02::day02_test::finds_invalid_id::case_4 ... ignored
+test day02::day02_test::finds_invalid_id_2::case_1 ... ignored
+test day02::day02_test::finds_invalid_id_2::case_2 ... ignored
+test day02::day02_test::finds_invalid_id_2::case_3 ... ignored
+test day02::day02_test::finds_invalid_id_2::case_4 ... ignored
+test day02::day02_test::finds_invalid_id_2::case_5 ... ignored
+test day02::day02_test::parses_string_range ... ignored
+test day02::day02_test::sample_part_two ... ignored
+test day02::day02_test::sample_test_1 ... ignored
+test day03::day03_test::get_voltage_2::case_1 ... ignored
+test day03::day03_test::get_voltage_2::case_2 ... ignored
+test day03::day03_test::get_voltage_2::case_3 ... ignored
+test day03::day03_test::get_voltage_2::case_4 ... ignored
+test day03::day03_test::get_voltage_2::case_5 ... ignored
+test day03::day03_test::get_voltage_2::case_6 ... ignored
+test day03::day03_test::get_voltage_2::case_7 ... ignored
+test day03::day03_test::get_voltage_2::case_8 ... ignored
+test day03::day03_test::gets_highest_voltage::case_1 ... ignored
+test day03::day03_test::gets_highest_voltage::case_2 ... ignored
+test day03::day03_test::gets_highest_voltage::case_3 ... ignored
+test day03::day03_test::gets_highest_voltage::case_4 ... ignored
+test day03::day03_test::gets_highest_voltage::case_5 ... ignored
+test day03::day03_test::gets_highest_voltage::case_6 ... ignored
+test day03::day03_test::sample_test_1 ... ignored
+test day03::day03_test::sample_test_2 ... ignored
+test day04::day04_test::creates_grid ... ignored
+test day04::day04_test::creates_grid_with_paper ... ignored
+test day04::day04_test::creates_row ... ignored
+test day04::day04_test::getting_neighbors::case_1 ... ignored
+test day04::day04_test::getting_neighbors::case_2 ... ignored
+test day04::day04_test::getting_neighbors_coords::case_1 ... ignored
+test day04::day04_test::getting_neighbors_coords::case_2 ... ignored
+test day04::day04_test::getting_neighbors_coords::case_3 ... ignored
+test day04::day04_test::getting_neighbors_coords::case_4 ... ignored
+test day04::day04_test::getting_neighbors_coords::case_5 ... ignored
+test day04::day04_test::parses_sample_input ... ignored
+test day04::day04_test::removes_from_grid ... ignored
+test day04::day04_test::sample_test_1 ... ignored
+test day04::day04_test::sample_test_2 ... ignored
+test day05::day05_test::checks_in_range::case_1 ... ignored
+test day05::day05_test::checks_in_range::case_2 ... ignored
+test day05::day05_test::merges_overlapping_ranges::case_1 ... ignored
+test day05::day05_test::merges_overlapping_ranges::case_2 ... ignored
+test day05::day05_test::merges_overlapping_ranges::case_3 ... ignored
+test day05::day05_test::merges_overlapping_ranges::case_4 ... ignored
+test day05::day05_test::parses_input::case_1 ... ignored
+test day05::day05_test::sample_test_1 ... ignored
+test day05::day05_test::sample_test_2 ... ignored
+test day06::day06_test::it_parses_operations::case_1 ... ignored
+test day06::day06_test::it_parses_operations::case_2 ... ignored
+test day06::day06_test::it_parses_operations::case_3 ... ignored
+test day06::day06_test::it_parses_operations::case_4 ... ignored
+test day06::day06_test::it_parses_operations::case_5 ... ignored
+test day06::day06_test::parses_input::case_1 ... ignored
+test day06::day06_test::sample_test_1 ... ignored
+test day06::day06_test::sample_test_2 ... ignored
+
+test result: ok. 0 passed; 0 failed; 61 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+benchmarks     fastest       │ slowest       │ median        │ mean          │ samples │ iters
+├─ day2_part1  31.23 ms      │ 34.48 ms      │ 31.55 ms      │ 31.78 ms      │ 100     │ 100
+├─ day2_part2  50.05 ms      │ 52.79 ms      │ 50.47 ms      │ 50.68 ms      │ 100     │ 100
+├─ day3_part1  220.5 µs      │ 306 µs        │ 221.7 µs      │ 225.8 µs      │ 100     │ 100
+├─ day3_part2  305.4 µs      │ 324.4 µs      │ 307 µs        │ 308.3 µs      │ 100     │ 100
+├─ day4_part1  1.541 ms      │ 1.602 ms      │ 1.555 ms      │ 1.557 ms      │ 100     │ 100
+├─ day4_part2  20.2 ms       │ 21.9 ms       │ 20.56 ms      │ 20.53 ms      │ 100     │ 100
+├─ day5_part1  631 µs        │ 767.9 µs      │ 641.5 µs      │ 642.6 µs      │ 100     │ 100
+├─ day5_part2  241.9 µs      │ 259.6 µs      │ 244.2 µs      │ 244.6 µs      │ 100     │ 100
+╰─ day6_part1  351 µs        │ 390.6 µs      │ 353.5 µs      │ 354.4 µs      │ 100     │ 100
+
