@@ -1,6 +1,5 @@
 use std::fmt::Debug;
 use std::str::FromStr;
-use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
 pub fn part_1(input: Vec<String>) -> u64 {
     let (ranges, ingredients) = parse_input::<u64>(input);

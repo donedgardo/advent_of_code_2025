@@ -8,6 +8,7 @@ pub mod day02;
 pub mod day03;
 pub mod day04;
 pub mod day05;
+pub mod day06;
 
 pub fn get_input(file_name: &str) -> Vec<String> {
     let path_name = format!("./src/input/{}", file_name);
